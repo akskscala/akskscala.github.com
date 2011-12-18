@@ -1,0 +1,923 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Akasaka.scala #akskscala</title>
+    <meta name="description" content="Akasaka.scala - Scala lovers in Tokyo, Japan.">
+    <meta name="author" content="Akasaka.scala">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- The settings for printing -->
+    <style type="text/css" media="print">
+        .topbar {
+        visibility: hidden;
+        }
+        .container-fluid > .sidebar {
+        float: left;
+        width: 0px;
+        }
+        .container-fluid > .content {
+        margin-left: 0px;
+        }
+    </style>
+
+    <!--
+     *** google-code-prettify ***
+     http://code.google.com/p/google-code-prettify/
+     -->
+    <link href="css/prettify.css" rel="stylesheet">
+    <script src="js/prettify.js"></script>
+    <script type="text/javascript"><!--//
+      try{ window.addEventListener("load",prettyPrint,false); }catch(e){ window.attachEvent("onload",prettyPrint); }
+    //--></script>
+
+    <style type="text/css">
+        body {
+        padding-top: 80px;
+        }
+    </style>
+
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">//<!--
+function zeroPadding(num, width) {
+  var zeroRepeat = '';
+  for(var i=0; i<width; i++) { zeroRepeat += '0'; }
+  var toSlice = -1 * width;
+  return (zeroRepeat + num).slice(toSlice);
+}
+function formatDateString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var year    = d.getFullYear();
+  var month   = zeroPadding(d.getMonth() + 1, 2);
+  var date    = zeroPadding(d.getDate(), 2);
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return year + '/' + month + '/' + date + ' ' + hours + ':' + minutes;
+}
+function formatTimeString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return hours + ':' + minutes;
+}
+var apiUrl = 'http://api.atnd.org/events/';
+var keyword = 'Akasaka.scala';
+var url = apiUrl + '?keyword=' + keyword + '&count=3&format=jsonp';
+$.getJSON(url + '&callback=?',
+  function(data){
+    $.each(data.events, function(i, event) {
+
+      var link = $('<a/>');
+      link.attr('target', '_blank');
+      link.attr('href', event.event_url);
+      link.text(event.title);
+
+      var startedAt = formatDateString(event.started_at);
+      var endAt = formatTimeString(event.ended_at);
+      var schedule = startedAt + '～' + endAt;
+
+      var acceptance = event.accepted + ' / ' + event.limit + ' 名';
+      var place = event.place;
+
+      $('#eventLoading').remove();
+      $('#events').append(
+        $('<tr>')
+          .append($('<td>').text(schedule))
+          .append($('<td>').html(link))
+          .append($('<td>').text(acceptance))
+          .append($('<td>').text(place))
+      );
+    });
+  });
+//--></script>
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="fill">
+        <div class="container">
+            <a class="brand" href="/"/>http://akskscala.github.com/</a>
+            <ul class="nav">
+                <li class="active"><a href="/"/>Top</a></li>
+                <li><a href="http://atnd.org/users/20398">ATND</a></li>
+                <li><a href="http://groups.google.com/group/akasakascala">Google Group</a></li>
+                <li><a href="https://twitter.com/#!/search/%23akskscala">Twitter</a></li>
+                <li><a href="http://togetter.com/mt/seratch">togetter</a></li>
+                <li><a href="https://github.com/akskscala/akskscala.github.com">GitHub</a></li>
+                <li><a href="http://jp.scala-users.org/">日本Scalaユーザーズグループ</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="content">
+
+<div class="page-header">
+    <h1>
+        <img src="img/akskscala.png" alt="#akskscala"/>
+        <small>#akskscala</small>
+    </h1>
+</div>
+
+<p>
+    Akasaka.scalaは、赤坂（溜池山王）界隈を中心としたScalaプログラマのコミュニティです。<br/>
+    <br/>
+    主な活動として、毎週木曜にJavaのバックグラウンドを持つ方を対象としたハンズオン勉強会をやっています。<br/>
+    この勉強会は基本的にハンズオン形式なので、各自でScala実行環境を準備したマシンをご持参ください。<br/>
+    <br/>
+
+<ul class="breadcrumb">
+    <li>実施日程（最新3件）</li>
+</ul>
+
+<table class="bordered-table zebra-striped" id="events">
+    <thead>
+    <tr>
+        <th>日時</th>
+        <th>ATND募集ページ</th>
+        <th>参加者数 / 定員</th>
+        <th>場所</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="eventLoading">
+        <td><img src="img/ajax-loader.gif" alt="Now Loading..."/></td>
+    </tr>
+    </tbody>
+</table>
+
+<ul class="breadcrumb">
+    <li>連絡先</li>
+</ul>
+
+<table class="bordered-table zebra-striped">
+    <thead>
+    <tr>
+        <th>項目</th>
+        <th>リンク先</th>
+        <th>備考</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>メーリングリスト</td>
+        <td><a href="http://groups.google.com/group/akasakascala" target="_blank">
+            Akasaka.scala Google Group</a></td>
+        <td>普段の連絡はこちらで行っています。特に勉強会に参加中の方はぜひご参加ください。</td>
+    </tr>
+    <tr>
+        <td>Twitterハッシュタグ</td>
+        <td><a href="https://twitter.com/#!/search/%23akskscala" target="_blank">#akskscala</a></td>
+        <td>
+            気になることがあったら<a href="https://twitter.com/#!/search/%23akskscala" target="_blank">
+            #akskscala</a> や <a href="http://twitter.com/seratch" target="_blank">
+            @seratch</a> をつけてつぶやいてみてください。
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</p>
+
+<ul class="breadcrumb">
+    <li>会場</li>
+</ul>
+
+<p>
+    〒107-0052<br/>
+    東京都港区赤坂1丁目11番44号 赤坂インターシティ<br/>
+    エムスリー株式会社 10F 来客用会議室3 <br/>
+    <a href="http://corporate.m3.com/corporate/overview/map.html" target="_blank">http://corporate.m3.com/corporate/overview/map.html</a>
+    <br/>
+    <br/>
+<iframe width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+        src="http://maps.google.co.jp/maps?f=q&amp;source=s_q&amp;hl=ja&amp;geocode=&amp;q=+%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%82%EF%BC%91%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%91%E2%88%92%EF%BC%94%EF%BC%94&amp;aq=&amp;sll=35.669064,139.747231&amp;sspn=0.013946,0.033023&amp;vpsrc=6&amp;brcurrent=3,0x60188b8f8cea2c61:0x8f81042b884b91a4,0&amp;ie=UTF8&amp;hq=&amp;hnear=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%82%EF%BC%91%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%91%E2%88%92%EF%BC%94%EF%BC%94&amp;ll=35.668955,139.7425&amp;spn=0.003486,0.008256&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+<br/>
+<br/>
+なお、<a href="http://corporate.m3.com/" target="_blank">エムスリー株式会社</a>は開発者コミュニティの勉強会やイベントにセミナールームの貸し出しを行っています。<br/>
+詳細については<a href="http://twitter.com/seratch" target="_blank">@seratch</a>が窓口になりますのでお気軽にお問い合わせください。<br/>
+</p>
+
+<hr/>
+<h2>これまでの活動履歴</h2>
+<br/>
+
+
+<table>
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第26回
+                <small>(2011年12月15日)</small>
+            </h4>
+            <a href="http://atnd.org/events/23182" target="_blank">
+                <button class="btn">ATND</button>
+            </a>
+            <a href="http://www.ustream.tv/recorded/19156614" target="_blank">
+                <button class="btn">Ustream録画（Netty入門）</button>
+            </a>
+            <a href="http://www.ustream.tv/recorded/19157179" target="_blank">
+                <button class="btn">Ustream録画（Finagleのexample）</button>
+            </a>
+            <a href="http://togetter.com/li/228245" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>Netty 入門 - 「Netty ベース」の何かに着手する前に</td>
+    <td>
+        <a href="http://www.slideshare.net/ts7i/learning-netty"
+           target="_blank">Netty 入門 - 「Netty ベース」の何かに着手する前に</a>
+    </td>
+    <td><a href="http://twitter.com/ts7i" target="_blank">@ts7i</a></td>
+</tr>
+<tr>
+    <td>
+        Scala School 6<br/>
+        Finagle導入
+    </td>
+    <td>
+        <a href="http://twitter.github.com/scala_school/finagle.html" target="_blank">
+            Scala School: An Introduction to Finagle
+        </a><br/>
+        <a href="http://twitter.github.com/scala_school/searchbird.html" target="_blank">
+            Scala School: Searchbird
+        </a><br/>
+        <a href="https://github.com/seratch/try-finagle" target="_blank">
+            Try Finagle
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>第25回
+            <small>(2011年12月8日)</small>
+        </h4>
+        <a href="http://atnd.org/events/22866" target="_blank">
+            <button class="btn">ATND</button>
+        </a>
+        <a href="http://togetter.com/li/224984" target="_blank">
+            <button class="btn">Togetter</button>
+        </a>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scala School<br/>
+        - Concurrency in Scala<br/>
+        - Java + Scala<br/>
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111204/1323019804" target="_blank">
+            Scala School意訳（Concurrency in Scala）
+        </a><br/>
+        <a href="http://d.hatena.ne.jp/seratch2/20111207/1323259912" target="_blank">
+            Scala School意訳（Java + Scala）
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+<tr>
+    <td>パーサコンビネータの実例紹介</td>
+    <td><a href="https://github.com/ishiijp/kanji-num-parser" target="_blank">github.com/ishiijp/kanji-num-parser</a></td>
+    <td><a href="http://twitter.com/ishiijp" target="_blank">@ishiijp</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第24回
+                <small>(2011年12月1日)</small>
+            </h4>
+            <a href="http://atnd.org/events/22521" target="_blank">
+                <button class="btn">ATND</button>
+            </a>
+            <a href="http://togetter.com/li/221661" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scala School<br/>
+        - More collections<br/>
+        - Testing with specs<br/>
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111130/1322621935" target="_blank">
+            Scala School意訳（More collections）
+        </a><br/>
+        <a href="http://d.hatena.ne.jp/seratch2/20111130/1322654782" target="_blank">
+            Scala School意訳（Testing with specs）
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第23回
+                <small>(2011年11月24日)</small>
+            </h4>
+            <a href="http://atnd.org/events/22232" target="_blank">
+                <button class="btn">ATND</button>
+            </a>
+            <a href="http://togetter.com/li/218565" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scala School<br/>
+        - Type &amp; polymorphism basics<br/>
+        - Advanced types<br/>
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111103/1320334000" target="_blank">
+            Scala School意訳（Type &amp; polymorphism basics）
+        </a><br/>
+        <a href="http://d.hatena.ne.jp/seratch2/20111104/1320427164" target="_blank">
+            Scala School意訳（Advanced types）
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第22回
+                <small>(2011年11月16日)</small>
+            </h4>
+            <a href="http://atnd.org/events/21578" target="_blank">
+                <button class="btn">ATND</button>
+            </a>
+            <a href="http://togetter.com/li/215073" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scala School<br/>
+        - Collections<br/>
+        - Pattern matching and functional composition<br/>
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111102/1320245066" target="_blank">
+            Scala School意訳（Collections）
+        </a><br/>
+        <a href="http://d.hatena.ne.jp/seratch2/20111103/1320302645" target="_blank">
+            Scala School意訳（Pattern matching and functional composition）
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第21回
+                <small>(2011年11月10日)</small>
+            </h4>
+            <a href="http://atnd.org/events/21575" target="_blank">
+                <button class="btn">ATND</button>
+            </a>
+            <a href="http://togetter.com/li/208000" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scala School<br/>
+        - Basics<br/>
+        - Basics continued<br/>
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111101/1320155723" target="_blank">
+            Scala School意訳（Basics）
+        </a><br/>
+        <a href="http://d.hatena.ne.jp/seratch2/20111101/1320162713" target="_blank">
+            Scala School意訳（Basics continued）
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第20回
+                <small>(2011年10月26日)</small>
+            </h4>
+            <a href="http://togetter.com/li/205688" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>Unfiltered 導入</td>
+    <td>
+        <a href="https://gist.github.com/1313140" target="_blank">サンプル例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/akr" target="_blank">@akr</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第19回
+                <small>(2011年10月19日)</small>
+            </h4>
+            <a href="http://togetter.com/li/202638" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>パーサコンビネータ 2</td>
+    <td>
+        <a href="https://gist.github.com/1295847" target="_blank">19-1 "JSON parser"</a><br/>
+        <a href="https://gist.github.com/1297691" target="_blank">19-2 "Apache access_log(combined) parser"</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第18回
+                <small>(2011年10月12日)</small>
+            </h4>
+            <a href="http://togetter.com/li/199805" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>パーサコンビネータ 1</td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20111010/1318254084" target="_blank">
+            RegexParsersで手軽にScalaのパーサコンビネータを使ってみる
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第17回
+                <small>(2011年10月5日)</small>
+            </h4>
+            <a href="http://togetter.com/li/196974" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>Play! Framework</td>
+    <td>
+        <a href="http://www.slideshare.net/ts7i/playscala091-until-play20-9555758"
+           title="(PlayScala(0.9.1) until Play(2.0))" target="_blank">
+            (PlayScala(0.9.1) until Play(2.0))
+        </a>
+    </td>
+    <td><a href="http://twitter.com/ts7i" target="_blank">@ts7i</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第16回
+                <small>(2011年9月28日)</small>
+            </h4>
+            <a href="http://togetter.com/li/193857" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        S-99: Ninety-Nine Scala Problems 6<br/>
+    </td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1247808">P46-P50 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第15回
+                <small>(2011年9月14日)</small>
+            </h4>
+            <a href="http://togetter.com/li/188127" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>S-99: Ninety-Nine Scala Problems 5</td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1213678">P36-P41 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第14回
+                <small>(2011年8月31日)</small>
+            </h4>
+            <a href="http://togetter.com/li/185107" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>S-99: Ninety-Nine Scala Problems 4</td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1195253">P31-P35 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第13回
+                <small>(2011年8月31日)</small>
+            </h4>
+            <a href="http://togetter.com/li/181843" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>S-99: Ninety-Nine Scala Problems 3</td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1167860">P21-P28 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第12回
+                <small>(2011年8月24日)</small>
+            </h4>
+            <a href="http://togetter.com/li/178817" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>S-99: Ninety-Nine Scala Problems 2</td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1159315">P11-P20 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第11回
+                <small>(2011年8月17日)</small>
+            </h4>
+            <a href="http://togetter.com/li/175766" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>S-99: Ninety-Nine Scala Problems 1</td>
+    <td>
+        <a href="http://aperiodic.net/phil/scala/s-99/">S-99: Ninety-Nine Scala Problems</a><br/>
+        <a href="https://gist.github.com/1149214">P01-P10 実装例</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第10回
+                <small>(2011年8月10日)</small>
+            </h4>
+            <a href="http://togetter.com/li/172590" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        ユニットテスト
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110807/1312726957">Scalaのユニットテスト入門</a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第9回
+                <small>(2011年8月3日)</small>
+            </h4>
+            <a href="http://togetter.com/li/170085" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Akka (Actor/Remote Actor)
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110802/1312305023">
+            Akka Actor入門
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第8回
+                <small>(2011年7月27日)</small>
+            </h4>
+            <a href="http://togetter.com/li/166977" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        ScalaのActor
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110507/1304777166">
+            ScalaのActor入門
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第7回
+                <small>(2011年7月21日)</small>
+            </h4>
+            <a href="http://togetter.com/li/163930" target="_blank">
+                <button class="btn">Togetter</button>
+            </a>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        暗黙の型変換・パラメータ
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110502/1304320277">
+            Scalaのimplicit（暗黙）入門
+        </a><br/>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第6回
+                <small>(2011年7月14日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>パターンマッチ</td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110429/1304090707">
+            Scalaのパターンマッチ入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第5回
+                <small>(2011年7月7日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        ScalaのコレクションAPI
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110429/1304072372">
+            Scalaのコレクション入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第4回
+                <small>(2011年6月30日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        非純粋関数型言語
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110428/1304013135">
+            非純粋関数型言語としてのScala入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第3回
+                <small>(2011年6月23日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        オブジェクト指向言語 2
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110428/1303999721">
+            オブジェクト指向言語としてのScala入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第2回
+                <small>(2011年6月16日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        オブジェクト指向言語 1
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110428/1303999721">
+            オブジェクト指向言語としてのScala入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+<tr>
+    <td colspan="3">
+        <h4>
+            <h4>第1回
+                <small>(2011年6月9日)</small>
+            </h4>
+        </h4>
+    </td>
+</tr>
+<tr>
+    <td>
+        Scalaの開発環境
+    </td>
+    <td>
+        <a href="http://d.hatena.ne.jp/seratch2/20110605/1307265828">
+            Scalaの開発環境入門
+        </a>
+    </td>
+    <td><a href="http://twitter.com/seratch" target="_blank">@seratch</a></td>
+</tr>
+
+
+</table>
+
+
+<hr/>
+
+<pre class="prettyprint">
+import java.net.URL
+import scala.io.Source
+import scala.util.parsing.json.JSON
+
+class Website(val urlString: String) {
+  val url = new URL(urlString)
+  def show = Source.fromURL(url,"UTF-8") foreach print
+}
+
+class TwitterHashTag(val hashTag: String) extends 
+  Website("http://search.twitter.com/search.json?q=" + hashTag.replaceFirst("#","%23")) {
+
+  def showSearchResult = {
+    JSON.parseFull(Source.fromURL(url, "UTF-8").mkString) match {
+      case Some(json: Map[_,_]) => {
+        json foreach {
+          case ("results", results: List[_]) => {
+            results foreach {
+              case result: Map[_, _] => println(result)
+              case _ =>
+            }
+          }
+          case _ =>
+        }
+      }
+      case None => println("orz...")
+    }
+  }
+}
+
+object AkasakaScala {
+  val hashTag = new TwitterHashTag("#akskscala")
+  val website = new Website("http://akskscala.github.com/")
+  val ml      = new Website("http://groups.google.com/group/akasakascala")
+}
+
+AkasakaScala.hashTag.showSearchResult
+</pre>
+
+
+<footer>
+    <p>&copy; Akasaka.scala
+        <script type="text/javascript">//<!--
+var startYear = 2011;
+var currentYear = new Date().getFullYear();
+if ( currentYear > startYear ) {
+  document.write(startYear + ' - ' + currentYear);
+} else {
+  document.write(currentYear);
+}
+        //--></script>
+        | <a href="http://twitter.github.com/bootstrap/#about">Twitter Bootstrap</a>
+    </p>
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
+
