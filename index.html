@@ -1,143 +1,59 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+
     <title>Akasaka.scala #akskscala</title>
+
     <meta name="description" content="Akasaka.scala - Scala lovers in Tokyo, Japan.">
     <meta name="author" content="Akasaka.scala">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!-- Le styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
-    <!-- The settings for printing -->
-    <style type="text/css" media="print">
-        .topbar {
-        visibility: hidden;
-        }
-        .container-fluid > .sidebar {
-        float: left;
-        width: 0px;
-        }
-        .container-fluid > .content {
-        margin-left: 0px;
-        }
-    </style>
+    <script type="text/javascript" src="js/jquery.js"></script>
 
-    <!--
-     *** google-code-prettify ***
-     http://code.google.com/p/google-code-prettify/
-     -->
-    <link href="css/prettify.css" rel="stylesheet">
-    <script src="js/prettify.js"></script>
-    <script type="text/javascript"><!--//
-      try{ window.addEventListener("load",prettyPrint,false); }catch(e){ window.attachEvent("onload",prettyPrint); }
-    //--></script>
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+    <script type="text/javascript" src="js/google-code-prettify/prettify.js"></script>
 
     <style type="text/css">
-        body {
-        padding-top: 80px;
-        }
+        body { padding-top: 60px; }
     </style>
 
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript">//<!--
-function zeroPadding(num, width) {
-  var zeroRepeat = '';
-  for(var i=0; i<width; i++) { zeroRepeat += '0'; }
-  var toSlice = -1 * width;
-  return (zeroRepeat + num).slice(toSlice);
-}
-function formatDateString(dateString) {
-  var d       = new Date(Date.parse(dateString));
-  var year    = d.getFullYear();
-  var month   = zeroPadding(d.getMonth() + 1, 2);
-  var date    = zeroPadding(d.getDate(), 2);
-  var hours   = zeroPadding(d.getHours(), 2);
-  var minutes = zeroPadding(d.getMinutes(), 2);
-  return year + '/' + month + '/' + date + ' ' + hours + ':' + minutes;
-}
-function formatTimeString(dateString) {
-  var d       = new Date(Date.parse(dateString));
-  var hours   = zeroPadding(d.getHours(), 2);
-  var minutes = zeroPadding(d.getMinutes(), 2);
-  return hours + ':' + minutes;
-}
-var apiUrl = 'http://api.atnd.org/events/';
-var keyword = 'Akasaka.scala';
-var url = apiUrl + '?keyword=' + keyword + '&count=3&format=jsonp';
-$.getJSON(url + '&callback=?',
-  function(data){
-    $.each(data.events, function(i, event) {
-
-      var link = $('<a/>');
-      link.attr('target', '_blank');
-      link.attr('href', event.event_url);
-      link.text(event.title);
-
-      var startedAt = formatDateString(event.started_at);
-      var endAt = formatTimeString(event.ended_at);
-      var schedule = startedAt + '～' + endAt;
-
-      var acceptance = event.accepted + ' / ' + event.limit + ' 名';
-      var place = event.place;
-
-      $('#eventLoading').remove();
-      $('#events').append(
-        $('<tr>')
-          .append($('<td>').text(schedule))
-          .append($('<td>').html(link))
-          .append($('<td>').text(acceptance))
-          .append($('<td>').text(place))
-      );
-    });
-  });
-//--></script>
-
-    <!-- Google Analytics tracking -->
-    <script type="text/javascript">//<!--
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2365128-10']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-//--></script>
-
 </head>
-<body>
 
-<div class="topbar">
-    <div class="fill">
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
         <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
             <a class="brand" href="/"/>http://akskscala.github.com/</a>
-            <ul class="nav">
-                <li class="active"><a href="/"/>Top</a></li>
-                <li><a href="http://atnd.org/users/20398">ATND</a></li>
-                <li><a href="http://groups.google.com/group/akasakascala">Google Group</a></li>
-                <li><a href="https://twitter.com/#!/search/%23akskscala">Twitter</a></li>
-                <li><a href="http://togetter.com/mt/seratch">togetter</a></li>
-                <li><a href="https://github.com/akskscala/akskscala.github.com">GitHub</a></li>
-                <li><a href="http://jp.scala-users.org/">日本Scalaユーザーズグループ</a></li>
-            </ul>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="/"/>Top</a></li>
+                    <li><a href="http://atnd.org/users/20398">ATND</a></li>
+                    <li><a href="http://groups.google.com/group/akasakascala">Google Group</a></li>
+                    <li><a href="https://twitter.com/#!/search/%23akskscala">Twitter</a></li>
+                    <li><a href="http://togetter.com/mt/seratch">togetter</a></li>
+                    <li><a href="https://github.com/akskscala/akskscala.github.com">GitHub</a></li>
+                    <li><a href="http://jp.scala-users.org/">日本Scalaユーザーズグループ</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="container">
 
-<div class="content">
-
-<div class="page-header">
-    <h1>
-        <img src="img/akskscala.png" alt="#akskscala"/>
-        <small>#akskscala</small>
-    </h1>
-</div>
+<h1>
+    <img src="img/akskscala.png" alt="#akskscala"/>
+    <small>#akskscala</small>
+</h1>
 
 <p>
     Akasaka.scalaは、赤坂（溜池山王）界隈を中心としたScalaプログラマのコミュニティです。<br/>
@@ -145,12 +61,13 @@ $.getJSON(url + '&callback=?',
     主な活動として、毎週木曜にJavaのバックグラウンドを持つ方を対象としたハンズオン勉強会をやっています。<br/>
     この勉強会は基本的にハンズオン形式なので、各自でScala実行環境を準備したマシンをご持参ください。<br/>
     <br/>
+</p>
 
 <ul class="breadcrumb">
     <li>実施日程（最新3件）</li>
 </ul>
 
-<table class="bordered-table zebra-striped" id="events">
+<table class="table table-bordered" id="events">
     <thead>
     <tr>
         <th>日時</th>
@@ -161,7 +78,7 @@ $.getJSON(url + '&callback=?',
     </thead>
     <tbody>
     <tr id="eventLoading">
-        <td><img src="img/ajax-loader.gif" alt="Now Loading..."/></td>
+        <td colspan="4"><img src="img/ajax-loader.gif" alt="Now Loading..."/></td>
     </tr>
     </tbody>
 </table>
@@ -170,7 +87,7 @@ $.getJSON(url + '&callback=?',
     <li>連絡先</li>
 </ul>
 
-<table class="bordered-table zebra-striped">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>項目</th>
@@ -203,8 +120,6 @@ $.getJSON(url + '&callback=?',
     </tbody>
 </table>
 
-</p>
-
 <ul class="breadcrumb">
     <li>会場</li>
 </ul>
@@ -228,8 +143,7 @@ $.getJSON(url + '&callback=?',
 <h2>これまでの活動履歴</h2>
 <br/>
 
-
-<table>
+<table class="table table-bordered">
 
 <tr>
     <td colspan="3">
@@ -258,14 +172,16 @@ $.getJSON(url + '&callback=?',
 <tr>
     <td>g8 ハンズオン</td>
     <td>
-        <a href="http://d.hatena.ne.jp/tototoshi/20120225/1330146653" target="_blank">giter8 テンプレートの作り方 - tototoshiの日記</a><br/>
+        <a href="http://d.hatena.ne.jp/tototoshi/20120225/1330146653" target="_blank">giter8 テンプレートの作り方 -
+            tototoshiの日記</a><br/>
     </td>
     <td><a href="http://twitter.com/tototoshi" target="_blank">@tototoshi</a></td>
 </tr>
 <tr>
     <td>リアクション</td>
     <td>
-        <a href="http://d.hatena.ne.jp/hiratara/20120308/1331204389" target="_blank">今日は Akasaka.scala 34 の日です - 北海道苫小牧市出身のPGが書くブログ</a><br/>
+        <a href="http://d.hatena.ne.jp/hiratara/20120308/1331204389" target="_blank">今日は Akasaka.scala 34 の日です -
+            北海道苫小牧市出身のPGが書くブログ</a><br/>
     </td>
     <td><a href="http://twitter.com/hiratara" target="_blank">@hiratara</a></td>
 </tr>
@@ -375,7 +291,8 @@ $.getJSON(url + '&callback=?',
 <tr>
     <td>リアクション</td>
     <td>
-        <a href="http://d.hatena.ne.jp/shinobu_aoki/20120209/1328807170" target="_blank">Akasaka.scala 31に参加してきた - エメラルドアオキロック</a><br/>
+        <a href="http://d.hatena.ne.jp/shinobu_aoki/20120209/1328807170" target="_blank">Akasaka.scala 31に参加してきた -
+            エメラルドアオキロック</a><br/>
     </td>
     <td><a href="http://twitter.com/shinobu_aoki" target="_blank">@shinobu_aoki</a></td>
 </tr>
@@ -738,7 +655,8 @@ $.getJSON(url + '&callback=?',
 <tr>
     <td>リアクション</td>
     <td>
-        <a href="http://d.hatena.ne.jp/akr4/20111110/1320943494" target="_blank">try-catch-finally を scala.util.control.Exception で書いてみる - Secret Staircase on はてな</a><br/>
+        <a href="http://d.hatena.ne.jp/akr4/20111110/1320943494" target="_blank">try-catch-finally を
+            scala.util.control.Exception で書いてみる - Secret Staircase on はてな</a><br/>
     </td>
     <td><a href="http://twitter.com/akr" target="_blank">@akr</a></td>
 </tr>
@@ -1236,7 +1154,88 @@ if ( currentYear > startYear ) {
 </footer>
 
 </div>
-</div>
+
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript" src="js/bootstrap-transition.js"></script>
+<script type="text/javascript" src="js/bootstrap-alert.js"></script>
+<script type="text/javascript" src="js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="js/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="js/bootstrap-tab.js"></script>
+<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="js/bootstrap-button.js"></script>
+<script type="text/javascript" src="js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap-carousel.js"></script>
+<script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+<script type="text/javascript" src="js/application.js"></script>
+
+<script type="text/javascript">//<!--
+function zeroPadding(num, width) {
+  var zeroRepeat = '';
+  for(var i=0; i<width; i++) { zeroRepeat += '0'; }
+  var toSlice = -1 * width;
+  return (zeroRepeat + num).slice(toSlice);
+}
+function formatDateString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var year    = d.getFullYear();
+  var month   = zeroPadding(d.getMonth() + 1, 2);
+  var date    = zeroPadding(d.getDate(), 2);
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return year + '/' + month + '/' + date + ' ' + hours + ':' + minutes;
+}
+function formatTimeString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return hours + ':' + minutes;
+}
+var apiUrl = 'http://api.atnd.org/events/';
+var keyword = 'Akasaka.scala';
+var url = apiUrl + '?keyword=' + keyword + '&count=3&format=jsonp';
+$.getJSON(url + '&callback=?',
+  function(data){
+$.each(data.events, function(i, event) {
+
+  var link = $('<a/>');
+  link.attr('target', '_blank');
+  link.attr('href', event.event_url);
+  link.text(event.title);
+
+  var startedAt = formatDateString(event.started_at);
+  var endAt = formatTimeString(event.ended_at);
+  var schedule = startedAt + '～' + endAt;
+
+  var acceptance = event.accepted + ' / ' + event.limit + ' 名';
+  var place = event.place;
+
+  $('#eventLoading').remove();
+  $('#events').append(
+    $('<tr>')
+      .append($('<td>').text(schedule))
+      .append($('<td>').html(link))
+      .append($('<td>').text(acceptance))
+      .append($('<td>').text(place))
+  );
+});
+  });
+//--></script>
+
+<!-- Google Analytics tracking -->
+<script type="text/javascript">//<!--
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-2365128-10']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+//--></script>
 
 </body>
 </html>
