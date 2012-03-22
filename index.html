@@ -58,13 +58,13 @@
 <p>
     Akasaka.scalaは、赤坂（溜池山王）界隈を中心としたScalaプログラマのコミュニティです。<br/>
     <br/>
-    主な活動として、毎週木曜にJavaのバックグラウンドを持つ方を対象としたハンズオン勉強会をやっています。<br/>
-    この勉強会は基本的にハンズオン形式なので、各自でScala実行環境を準備したマシンをご持参ください。<br/>
+    主な活動として、前半は読書会、後半はハンズオンという形式の勉強会をやっています。<br/>
+    各自でScala実行環境を準備したマシンをご持参ください。<br/>
     <br/>
 </p>
 
 <ul class="breadcrumb">
-    <li>実施日程（最新3件）</li>
+    <li>勉強会実施日程（最新3件）</li>
 </ul>
 
 <table class="table table-bordered" id="events">
@@ -1104,25 +1104,23 @@ import scala.util.parsing.json.JSON
 
 class Website(val urlString: String) {
   val url = new URL(urlString)
-  def show = Source.fromURL(url,"UTF-8") foreach print
+  def show = Source.fromURL(url, "UTF-8") foreach print
 }
 
-class TwitterHashTag(val hashTag: String) extends 
-  Website("http://search.twitter.com/search.json?q=" + hashTag.replaceFirst("#","%23")) {
+class TwitterHashTag(val hashTag: String) extends Website(
+  "http://search.twitter.com/search.json?q=" + hashTag.replaceFirst("#","%23")) {
 
   def showSearchResult = {
     JSON.parseFull(Source.fromURL(url, "UTF-8").mkString) match {
-      case Some(json: Map[_,_]) => {
+      case Some(json: Map[_,_]) =>
         json foreach {
-          case ("results", results: List[_]) => {
+          case ("results", results: List[_]) =>
             results foreach {
               case result: Map[_, _] => println(result)
               case _ =>
             }
-          }
           case _ =>
         }
-      }
       case None => println("orz...")
     }
   }
