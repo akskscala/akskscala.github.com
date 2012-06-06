@@ -12,7 +12,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
     <script type="text/javascript" src="js/google-code-prettify/prettify.js"></script>
@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body onload="prettyPrint()">
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -130,8 +130,8 @@
     <a href="http://corporate.m3.com/corporate/overview/map.html" target="_blank">http://corporate.m3.com/corporate/overview/map.html</a>
     <br/>
     <br/>
-<iframe width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-        src="http://maps.google.co.jp/maps?f=q&amp;source=s_q&amp;hl=ja&amp;geocode=&amp;q=+%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%82%EF%BC%91%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%91%E2%88%92%EF%BC%94%EF%BC%94&amp;aq=&amp;sll=35.669064,139.747231&amp;sspn=0.013946,0.033023&amp;vpsrc=6&amp;brcurrent=3,0x60188b8f8cea2c61:0x8f81042b884b91a4,0&amp;ie=UTF8&amp;hq=&amp;hnear=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%82%EF%BC%91%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%91%E2%88%92%EF%BC%94%EF%BC%94&amp;ll=35.668955,139.7425&amp;spn=0.003486,0.008256&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+<div id="mapviewer"><iframe id="map" Name="mapFrame" scrolling="no" width="640" height="400" frameborder="0" src="http://www.bing.com/maps/embed/?lvl=17&amp;cp=35.66900835332772~139.7419126162391&amp;sty=r&amp;draggable=false&amp;v=2&amp;dir=0&amp;ss=yp.%C3%A8%C2%B5%C2%A4%C3%A5%C2%9D%C2%82%C3%A3%C2%82%C2%A4%C3%A3%C2%83%C2%B3%C3%A3%C2%82%C2%BF%C3%A3%C2%83%C2%BC%C3%A3%C2%82%C2%B7%C3%A3%C2%83%C2%86%C3%A3%C2%82%C2%A3~pg.1~rad.0%2C30110744807937&amp;form=LMLTEW&amp;mkt=ja-jp&amp;emid=2498323f-b6f0-2791-2094-bcad07d127f8&amp;w=640&amp;h=400"></iframe><div id="LME_maplinks" style="line-height:20px;"><a id="LME_largerMap" href="http://www.bing.com/maps/?cp=35.669008353327719~139.74191261623909&amp;sty=r&amp;lvl=17&amp;where1=&amp;mm_embed=map&amp;form=LMLTEW" target="_blank">拡大地図の表示</a>&nbsp;<a id="LME_directions" href="http://www.bing.com/maps/?cp=35.669008353327719~139.74191261623909&amp;sty=r&amp;lvl=17&amp;rtp=~pos.35.669008353327719_139.74191261623909_&amp;mm_embed=dir&amp;form=LMLTEW" target="_blank">経路を検索</a>&nbsp;<a id="LME_birdsEye" href="http://www.bing.com/maps/?cp=pybbj3wnbn92&amp;sty=b&amp;lvl=18&amp;where1=&amp;mm_embed=be&amp;form=LMLTEW" target="_blank">概観図の表示</a></div>
+</div>
 <br/>
 <br/>
 なお、<a href="http://corporate.m3.com/" target="_blank">エムスリー株式会社</a>は開発者コミュニティの勉強会やイベントにセミナールームの貸し出しを行っています。<br/>
@@ -1290,75 +1290,8 @@ if ( currentYear > startYear ) {
 
 </div>
 
-<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/google-code-prettify/prettify.js"></script>
-<script type="text/javascript" src="js/bootstrap-transition.js"></script>
-<script type="text/javascript" src="js/bootstrap-alert.js"></script>
-<script type="text/javascript" src="js/bootstrap-modal.js"></script>
-<script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="js/bootstrap-scrollspy.js"></script>
-<script type="text/javascript" src="js/bootstrap-tab.js"></script>
-<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
-<script type="text/javascript" src="js/bootstrap-popover.js"></script>
-<script type="text/javascript" src="js/bootstrap-button.js"></script>
-<script type="text/javascript" src="js/bootstrap-collapse.js"></script>
-<script type="text/javascript" src="js/bootstrap-carousel.js"></script>
-<script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
 <script type="text/javascript" src="js/application.js"></script>
-
-<script type="text/javascript">//<!--
-function zeroPadding(num, width) {
-  var zeroRepeat = '';
-  for(var i=0; i<width; i++) { zeroRepeat += '0'; }
-  var toSlice = -1 * width;
-  return (zeroRepeat + num).slice(toSlice);
-}
-function formatDateString(dateString) {
-  var d       = new Date(Date.parse(dateString));
-  var year    = d.getFullYear();
-  var month   = zeroPadding(d.getMonth() + 1, 2);
-  var date    = zeroPadding(d.getDate(), 2);
-  var hours   = zeroPadding(d.getHours(), 2);
-  var minutes = zeroPadding(d.getMinutes(), 2);
-  return year + '/' + month + '/' + date + ' ' + hours + ':' + minutes;
-}
-function formatTimeString(dateString) {
-  var d       = new Date(Date.parse(dateString));
-  var hours   = zeroPadding(d.getHours(), 2);
-  var minutes = zeroPadding(d.getMinutes(), 2);
-  return hours + ':' + minutes;
-}
-var apiUrl = 'http://api.atnd.org/events/';
-var keyword = 'Akasaka.scala';
-var url = apiUrl + '?keyword=' + keyword + '&count=3&format=jsonp';
-$.getJSON(url + '&callback=?',
-  function(data){
-$.each(data.events, function(i, event) {
-
-  var link = $('<a/>');
-  link.attr('target', '_blank');
-  link.attr('href', event.event_url);
-  link.text(event.title);
-
-  var startedAt = formatDateString(event.started_at);
-  var endAt = formatTimeString(event.ended_at);
-  var schedule = startedAt + '～' + endAt;
-
-  var acceptance = event.accepted + ' / ' + event.limit + ' 名';
-  var place = event.place;
-
-  $('#eventLoading').remove();
-  $('#events').append(
-    $('<tr>')
-      .append($('<td>').text(schedule))
-      .append($('<td>').html(link))
-      .append($('<td>').text(acceptance))
-      .append($('<td>').text(place))
-  );
-});
-  });
-//--></script>
 
 <!-- Google Analytics tracking -->
 <script type="text/javascript">//<!--

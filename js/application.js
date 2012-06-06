@@ -1,180 +1,50 @@
-// NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-// IT'S ALL JUST JUNK FOR OUR DOCS!
-// ++++++++++++++++++++++++++++++++++++++++++
+function zeroPadding(num, width) {
+  var zeroRepeat = '';
+  for(var i=0; i<width; i++) { zeroRepeat += '0'; }
+  var toSlice = -1 * width;
+  return (zeroRepeat + num).slice(toSlice);
+}
+function formatDateString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var year    = d.getFullYear();
+  var month   = zeroPadding(d.getMonth() + 1, 2);
+  var date    = zeroPadding(d.getDate(), 2);
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return year + '/' + month + '/' + date + ' ' + hours + ':' + minutes;
+}
+function formatTimeString(dateString) {
+  var d       = new Date(Date.parse(dateString));
+  var hours   = zeroPadding(d.getHours(), 2);
+  var minutes = zeroPadding(d.getMinutes(), 2);
+  return hours + ':' + minutes;
+}
+var apiUrl = 'http://api.atnd.org/events/';
+var keyword = 'Akasaka.scala';
+var url = apiUrl + '?keyword=' + keyword + '&count=3&format=jsonp';
+$.getJSON(url + '&callback=?', function(data){
+  $.each(data.events, function(i, event) {
+    var link = $('<a/>');
+    link.attr('target', '_blank');
+    link.attr('href', event.event_url);
+    link.text(event.title);
 
-!function ($) {
+    var startedAt = formatDateString(event.started_at);
+    var endAt = formatTimeString(event.ended_at);
+    var schedule = startedAt + '～' + endAt;
 
-  $(function(){
+    var acceptance = event.accepted + ' / ' + event.limit + ' 名';
+    var place = event.place;
 
-    // Disable certain links in docs
-    $('section [href^=#]').click(function (e) {
-      e.preventDefault()
-    })
+    $('#eventLoading').remove();
+    $('#events').append(
+      $('<tr>')
+        .append($('<td>').text(schedule))
+        .append($('<td>').html(link))
+        .append($('<td>').text(acceptance))
+        .append($('<td>').text(place))
+    );
+  });
+});
 
-    // make code pretty
-    window.prettyPrint && prettyPrint()
 
-    // add-ons
-    $('.add-on :checkbox').on('click', function () {
-      var $this = $(this)
-        , method = $this.attr('checked') ? 'addClass' : 'removeClass'
-      $(this).parents('.add-on')[method]('active')
-    })
-
-    // position static twipsies for components page
-    if ($(".twipsies a").length) {
-      $(window).on('load resize', function () {
-        $(".twipsies a").each(function () {
-          $(this)
-            .tooltip({
-              placement: $(this).attr('title')
-            , trigger: 'manual'
-            })
-            .tooltip('show')
-          })
-      })
-    }
-
-    // add tipsies to grid for scaffolding
-    if ($('#grid-system').length) {
-      $('#grid-system').tooltip({
-          selector: '.show-grid > div'
-        , title: function () { return $(this).width() + 'px' }
-      })
-    }
-
-    // fix sub nav on scroll
-    var $win = $(window)
-      , $nav = $('.subnav')
-      , navTop = $('.subnav').length && $('.subnav').offset().top - 40
-      , isFixed = 0
-
-    processScroll()
-
-    $win.on('scroll', processScroll)
-
-    function processScroll() {
-      var i, scrollTop = $win.scrollTop()
-      if (scrollTop >= navTop && !isFixed) {
-        isFixed = 1
-        $nav.addClass('subnav-fixed')
-      } else if (scrollTop <= navTop && isFixed) {
-        isFixed = 0
-        $nav.removeClass('subnav-fixed')
-      }
-    }
-
-    // tooltip demo
-    $('.tooltip-demo.well').tooltip({
-      selector: "a[rel=tooltip]"
-    })
-
-    $('.tooltip-test').tooltip()
-    $('.popover-test').popover()
-
-    // popover demo
-    $("a[rel=popover]")
-      .popover()
-      .click(function(e) {
-        e.preventDefault()
-      })
-
-    // button state demo
-    $('#fat-btn')
-      .click(function () {
-        var btn = $(this)
-        btn.button('loading')
-        setTimeout(function () {
-          btn.button('reset')
-        }, 3000)
-      })
-
-    // carousel demo
-    $('#myCarousel').carousel()
-
-    // javascript build logic
-    var inputsComponent = $("#components.download input")
-      , inputsPlugin = $("#plugins.download input")
-      , inputsVariables = $("#variables.download input")
-
-    // toggle all plugin checkboxes
-    $('#components.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsComponent.attr('checked', !inputsComponent.is(':checked'))
-    })
-
-    $('#plugins.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsPlugin.attr('checked', !inputsPlugin.is(':checked'))
-    })
-
-    $('#variables.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsVariables.val('')
-    })
-
-    // request built javascript
-    $('.download-btn').on('click', function () {
-
-      var css = $("#components.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
-        , js = $("#plugins.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
-        , vars = {}
-        , img = ['glyphicons-halflings.png', 'glyphicons-halflings-white.png']
-
-    $("#variables.download input")
-      .each(function () {
-        $(this).val() && (vars[ $(this).prev().text() ] = $(this).val())
-      })
-
-      $.ajax({
-        type: 'POST'
-      , url: 'http://bootstrap.herokuapp.com'
-      , dataType: 'jsonpi'
-      , params: {
-          js: js
-        , css: css
-        , vars: vars
-        , img: img
-      }
-      })
-    })
-
-  })
-
-// Modified from the original jsonpi https://github.com/benvinegar/jquery-jsonpi
-$.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
-  var url = opts.url;
-
-  return {
-    send: function(_, completeCallback) {
-      var name = 'jQuery_iframe_' + jQuery.now()
-        , iframe, form
-
-      iframe = $('<iframe>')
-        .attr('name', name)
-        .appendTo('head')
-
-      form = $('<form>')
-        .attr('method', opts.type) // GET or POST
-        .attr('action', url)
-        .attr('target', name)
-
-      $.each(opts.params, function(k, v) {
-
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', k)
-          .attr('value', typeof v == 'string' ? v : JSON.stringify(v))
-          .appendTo(form)
-      })
-
-      form.appendTo('body').submit()
-    }
-  }
-})
-
-}(window.jQuery)
